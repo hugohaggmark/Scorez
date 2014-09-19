@@ -24,6 +24,14 @@ module.exports.addTestUser2 = function(callback) {
   user.addUser(this.testUser2.name, this.testUser2.nickname, this.testUser2.hash, callback);
 };
 
+module.exports.validateOkTestUser = function(err, user) {
+  should.not.exists(err);
+  user.nickname.should.be.equal('madlazydragon');
+  user.displayNickName.should.be.equal('MadLazyDragon');
+  user.name.should.be.equal('Hugo Häggmark');
+  user.hash.should.be.equal('123456');
+};
+
 module.exports.testUser = {
   nickname: 'MadLazyDragon',
   name: 'Hugo Häggmark',

@@ -22,11 +22,7 @@ describe('Adding users', function() {
 
   it('users have the correct properties stored', function(done) {
     testHelpers.addTestUser(function(err, result) {
-      should.not.exists(err);
-      result._id.should.be.equal('madlazydragon');
-      result.nickname.should.be.equal('MadLazyDragon');
-      result.name.should.be.equal('Hugo Häggmark');
-      result.hash.should.be.equal('123456');
+      testHelpers.validateOkTestUser(err, result);
       done();
     });
   });
@@ -70,11 +66,7 @@ describe('Listing users', function() {
   it('users can be found by nickname', function(done) {
     testHelpers.addTestUser(function() {
       user.getUser(testHelpers.testUser.nickname, function(err, result) {
-        should.not.exists(err);
-        result._id.should.be.equal('madlazydragon');
-        result.nickname.should.be.equal('MadLazyDragon');
-        result.name.should.be.equal('Hugo Häggmark');
-        result.hash.should.be.equal('123456');
+        testHelpers.validateOkTestUser(err, result);
         done();
       });
     });
@@ -83,15 +75,32 @@ describe('Listing users', function() {
   it('users nickname are not case sensitive', function(done) {
     testHelpers.addTestUser(function() {
       user.getUser(testHelpers.testUser2.nickname, function(err, result) {
-        should.not.exists(err);
-        result._id.should.be.equal('madlazydragon');
-        result.nickname.should.be.equal('MadLazyDragon');
-        result.name.should.be.equal('Hugo Häggmark');
-        result.hash.should.be.equal('123456');
+        testHelpers.validateOkTestUser(err, result);
         done();
       });
     });
   });
+
+  it('an existing nickname should be flagged as in use', function(done) {
+    testHelpers.addTestUser(function() {
+      user.isNickNameInUse(testHelpers.testUser.nickname, function(err, result) {
+        should.not.exists(err);
+        result.should.be.equal(true);
+        done();
+      });
+    });
+  });
+
+  it('an nonexisting nickname should be flagged as unused', function(done) {
+    testHelpers.addTestUser(function() {
+      user.isNickNameInUse('TheDude', function(err, result) {
+        should.not.exists(err);
+        result.should.be.equal(false);
+        done();
+      });
+    });
+  });
+
 });
 
 describe('Updating users', function() {
@@ -117,8 +126,8 @@ describe('Updating users', function() {
         should.not.exists(err);
         user.getUser(testHelpers.testUser.nickname, function(err, result) {
           should.not.exists(err);
-          result._id.should.be.equal('madlazydragon');
-          result.nickname.should.be.equal('MadLazyDragon');
+          result.nickname.should.be.equal('madlazydragon');
+          result.displayNickName.should.be.equal('MadLazyDragon');
           result.name.should.be.equal('Kalle Anka');
           result.hash.should.be.equal('123456');
           done();
