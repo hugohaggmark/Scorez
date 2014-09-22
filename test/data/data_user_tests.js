@@ -1,7 +1,6 @@
 var should = require('should'),
-  testHelpers = require('./test_helpers'),
-  user = require('../../lib/data_user'),
-  config = require('../../config')('local');
+  testHelpers = require('../test_helpers'),
+  user = require('../../lib/data_user');
 
 describe('Adding users', function() {
 
@@ -152,7 +151,7 @@ describe('Updating users', function() {
     });
   });
 
-  it('users can update their nickname if it does not exist', function(done) {
+  it('users can update their nickname to a nickname that does not exist', function(done) {
     testHelpers.addTestUser(function() {
       user.updateUserNickName(testHelpers.testUser.nickname, 'LaZy', function(err, result) {
         should.not.exists(err);
@@ -168,7 +167,7 @@ describe('Updating users', function() {
     });
   });
 
-  it('users can not update their nickname if it already exist', function(done) {
+  it('users can not update their nickname to a nickname if that already exist', function(done) {
     testHelpers.addTestUser(function() {
       user.updateUserNickName(testHelpers.testUser.nickname, 'MadLazyDragon', function(err, result) {
         should.exists(err);

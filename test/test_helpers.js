@@ -1,7 +1,7 @@
 var should = require('should'),
-  data = require('../../lib/data'),
-  user = require('../../lib/data_user'),
-  config = require('../../config')('local'),
+  data = require('../lib/data'),
+  user = require('../lib/data_user'),
+  config = require('../config')('local'),
   mongoose = require("mongoose");
 
 module.exports.connectMongo = function() {
@@ -17,11 +17,11 @@ module.exports.deleteAll = function() {
 };
 
 module.exports.addTestUser = function(callback) {
-  user.addUser(this.testUser.name, this.testUser.nickname, this.testUser.hash, callback);
+  user.addUser(this.testUser.nickname, this.testUser.name, this.testUser.hash, callback);
 };
 
 module.exports.addTestUser2 = function(callback) {
-  user.addUser(this.testUser2.name, this.testUser2.nickname, this.testUser2.hash, callback);
+  user.addUser(this.testUser2.nickname, this.testUser2.name, this.testUser2.hash, callback);
 };
 
 module.exports.validateOkTestUser = function(err, user) {
