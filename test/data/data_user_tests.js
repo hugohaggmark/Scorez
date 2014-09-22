@@ -135,4 +135,46 @@ describe('Updating users', function() {
       });
     });
   });
+
+  it('users can update their hash', function(done) {
+    testHelpers.addTestUser(function() {
+      user.updateUserHash(testHelpers.testUser.nickname, '654321', function(err, result) {
+        should.not.exists(err);
+        user.getUser(testHelpers.testUser.nickname, function(err, result) {
+          should.not.exists(err);
+          result.nickname.should.be.equal('madlazydragon');
+          result.displayNickName.should.be.equal('MadLazyDragon');
+          result.name.should.be.equal('Hugo Häggmark');
+          result.hash.should.be.equal('654321');
+          done();
+        });
+      });
+    });
+  });
+
+  it('users can update their nickname if it does not exist', function(done) {
+    testHelpers.addTestUser(function() {
+      user.updateUserNickName(testHelpers.testUser.nickname, 'LaZy', function(err, result) {
+        should.not.exists(err);
+        user.getUser('LaZy', function(err, result) {
+          should.not.exists(err);
+          result.nickname.should.be.equal('lazy');
+          result.displayNickName.should.be.equal('LaZy');
+          result.name.should.be.equal('Hugo Häggmark');
+          result.hash.should.be.equal('123456');
+          done();
+        });
+      });
+    });
+  });
+
+  it('users can not update their nickname if it already exist', function(done) {
+    testHelpers.addTestUser(function() {
+      user.updateUserNickName(testHelpers.testUser.nickname, 'MadLazyDragon', function(err, result) {
+        should.exists(err);
+        done();
+      });
+    });
+  });
+
 });
