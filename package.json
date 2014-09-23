@@ -12,7 +12,8 @@
     "nodemon": "*",
     "mongoose": "*",
     "mongodb": "*",
-    "express": "*"
+    "express": "*",
+    "body-parser": "*"
   },
   "devDependencies": {
     "mocha": "*",

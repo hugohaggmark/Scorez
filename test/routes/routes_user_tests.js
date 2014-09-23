@@ -21,7 +21,7 @@ describe('Posting users', function() {
 	});
 
 	it('posting a user stores it in database', function(done) {
-		route.Post(testHelpers.testUser.nickname, testHelpers.testUser.name, testHelpers.testUser.hash, function(err, result) {
+		route.Post(testHelpers.testUser, function(err, result) {
 			db.getUser(testHelpers.testUser.nickname, function(err, dbUser) {
 				testHelpers.validateOkTestUser(err, dbUser);
 				done();
@@ -30,9 +30,42 @@ describe('Posting users', function() {
 	});
 
 	it('posting a user returns the api address to the user', function(done) {
-		route.Post(testHelpers.testUser.nickname, testHelpers.testUser.name, testHelpers.testUser.hash, function(err, result) {
+		route.Post(testHelpers.testUser, function(err, result) {
 			should.not.exists(err);
 			result.should.be.equal('/users/madlazydragon');
+			done();
+		});
+	});
+
+	it('posting a user missing a nickname should return an error', function(done) {
+		var user = {
+			name: 'Kalle',
+			hash: '123456'
+		};
+		route.Post(user, function(err, result) {
+			should.exists(err);
+			done();
+		});
+	});
+
+	it('posting a user missing a name should return an error', function(done) {
+		var user = {
+			nickname: 'Kalle',
+			hash: '123456'
+		};
+		route.Post(user, function(err, result) {
+			should.exists(err);
+			done();
+		});
+	});
+
+	it('posting a user missing a hash should return an error', function(done) {
+		var user = {
+			nickname: 'Kalle',
+			name: 'Olle'
+		};
+		route.Post(user, function(err, result) {
+			should.exists(err);
 			done();
 		});
 	});
