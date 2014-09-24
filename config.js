@@ -4,12 +4,14 @@ var config = {
   local: {
     appPort: appPort,
     mode: 'local',
-    mongoDbUri: mongoDbUri
+    mongoDbUri: mongoDbUri,
+    baseUrl: 'http://localhost:' + appPort
   },
   prod: {
     appPort: appPort,
     mode: 'prod',
-    mongoDbUri: mongoDbUri
+    mongoDbUri: mongoDbUri,
+    baseUrl: 'http://localhost:' + appPort
   }
 };
 

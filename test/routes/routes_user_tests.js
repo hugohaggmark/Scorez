@@ -1,6 +1,7 @@
 var should = require('should'),
 	testHelpers = require('../test_helpers'),
 	db = require('../../lib/data_user'),
+	config = require('../../config')('local'),
 	route = require('../../lib/route_user');
 
 describe('Posting users', function() {
@@ -32,7 +33,7 @@ describe('Posting users', function() {
 	it('posting a user returns the api address to the user', function(done) {
 		route.Post(testHelpers.testUser, function(err, result) {
 			should.not.exists(err);
-			result.should.be.equal('/users/madlazydragon');
+			result.href.should.be.equal(config.baseUrl + '/users/madlazydragon');
 			done();
 		});
 	});
