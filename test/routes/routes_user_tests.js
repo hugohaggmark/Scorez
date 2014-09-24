@@ -105,4 +105,19 @@ describe('Get route', function() {
 			});
 		});
 	});
+
+	it('Get a user by nickname that does not exists', function(done) {
+		route.Get('', function(err, result) {
+			should.exists(err);
+			done();
+		});
+	});
+
+	it('Get a user by an undefined nickname', function(done) {
+		route.Get(null, function(err, result) {
+			should.exists(err);
+			done();
+		});
+	});
+
 });

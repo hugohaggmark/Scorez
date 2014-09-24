@@ -71,6 +71,13 @@ describe('Listing users', function() {
     });
   });
 
+  it('trying to find a user by an undefined nickname', function(done) {
+    user.getUser(null, function(err, result) {
+      should.exists(err);
+      done();
+    });
+  });
+
   it('users nickname are not case sensitive', function(done) {
     testHelpers.addTestUser(function() {
       user.getUser(testHelpers.testUser2.nickname, function(err, result) {
