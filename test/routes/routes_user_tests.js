@@ -30,10 +30,10 @@ describe('Post route', function() {
 		});
 	});
 
-	it('posting a user returns the api address to the user', function(done) {
+	it('posting a user returns the api address to the created user', function(done) {
 		route.Post(testHelpers.testUser, function(err, result) {
 			should.not.exists(err);
-			result.href.should.be.equal(config.baseUrl + '/users/madlazydragon');
+			result.href.should.be.equal(config.baseUrl + '/users/MadLazyDragon');
 			done();
 		});
 	});
@@ -93,7 +93,14 @@ describe('Get route', function() {
 	it('Get a user that exists returns user properties and hrefs to actions', function(done) {
 		route.Post(testHelpers.testUser, function(err, result) {
 			route.Get(testHelpers.testUser.nickname, function(err, result) {
-				testHelpers.validateOkTestUser(err, result);
+				should.not.exists(err);
+				should.not.exists(result._id);
+				should.not.exists(result.__v);
+				should.not.exists(result.displayNickName);
+				should.not.exists(result.hash);
+				result.nickname.should.be.equal('MadLazyDragon');
+				result.name.should.be.equal('Hugo Häggmark');
+				result.links.self.should.be.equal(config.baseUrl + '/users/MadLazyDragon');
 				done();
 			});
 		});
