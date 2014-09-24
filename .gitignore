@@ -25,4 +25,8 @@ build/Release
 node_modules
 
 # Users Environment Variables
+<<<<<<< HEAD
 .lock-wscript
+=======
+.lock-wscript
+>>>>>>> 82aa788440aea3dd176e5393741a962dc5f18000
