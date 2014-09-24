@@ -7,8 +7,14 @@ var express = require('express'),
 
 var jsonParser = bodyParser.json();
 
-app.get('/', function(request, response) {
-  response.send('hello world hugo');
+app.get('/users/:nickname(\\w+)/', function(request, response) {
+  users.Get(request.params.nickname, function(err, result) {
+    if (err) {
+      response.send('Ooops something went wrong: ' + err);
+    } else {
+      response.send(result);
+    }
+  });
 });
 
 app.post('/users', jsonParser, function(request, response) {

@@ -4,7 +4,7 @@ var should = require('should'),
 	config = require('../../config')('local'),
 	route = require('../../lib/route_user');
 
-describe('Posting users', function() {
+describe('Post route', function() {
 
 	before(function(done) {
 		testHelpers.connectMongo();
@@ -71,4 +71,31 @@ describe('Posting users', function() {
 		});
 	});
 
+});
+
+describe('Get route', function() {
+
+	before(function(done) {
+		testHelpers.connectMongo();
+		done();
+	});
+
+	beforeEach(function(done) {
+		testHelpers.deleteAll();
+		done();
+	});
+
+	after(function(done) {
+		testHelpers.deleteAll();
+		done();
+	});
+
+	it('Get a user that exists returns user properties and hrefs to actions', function(done) {
+		route.Post(testHelpers.testUser, function(err, result) {
+			route.Get(testHelpers.testUser.nickname, function(err, result) {
+				testHelpers.validateOkTestUser(err, result);
+				done();
+			});
+		});
+	});
 });
