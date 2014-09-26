@@ -7,12 +7,34 @@ var express = require('express'),
 
 var jsonParser = bodyParser.json();
 
+var sendError = function(response, msg, code) {
+  response.status(code)
+    .send('Ooops something went wrong: ' + msg)
+    .end();
+};
+
+var sendResult = function(response, result, code) {
+  response.status(code)
+    .send(result)
+    .end();
+};
+
 app.get('/users/:nickname(\\w+)/', function(request, response) {
   users.Get(request.params.nickname, function(err, result) {
     if (err) {
-      response.send('Ooops something went wrong: ' + err);
+      sendError(response, err, 404);
     } else {
-      response.send(result);
+      sendResult(response, result, 200);
+    }
+  });
+});
+
+app.post('/users/authenticate', jsonParser, function(request, response) {
+  users.AuthenticateUser(request.body, function(err, result) {
+    if (err) {
+      sendError(response, err, 500);
+    } else {
+      sendResult(response, null, 200);
     }
   });
 });
@@ -20,9 +42,9 @@ app.get('/users/:nickname(\\w+)/', function(request, response) {
 app.post('/users', jsonParser, function(request, response) {
   users.Post(request.body, function(err, result) {
     if (err) {
-      response.send('Ooops something went wrong: ' + err);
+      sendError(response, err, 500);
     } else {
-      response.send(result);
+      sendResult(response, result, 201);
     }
   });
 });

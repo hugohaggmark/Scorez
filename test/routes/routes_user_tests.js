@@ -71,6 +71,46 @@ describe('Post route', function() {
 		});
 	});
 
+	it('authenticate user with existing nickname and hash', function(done) {
+		route.Post(testHelpers.testUser, function(err, result) {
+			var user = {
+				nickname: testHelpers.testUser.nickname,
+				hash: testHelpers.testUser.hash
+			};
+			route.AuthenticateUser(user, function(err, result) {
+				should.not.exists(err);
+				result.should.be.equal(true);
+				done();
+			});
+		});
+	});
+
+	it('authenticate user with existing nickname and invalid hash', function(done) {
+		route.Post(testHelpers.testUser, function(err, result) {
+			var user = {
+				nickname: testHelpers.testUser.nickname,
+				hash: 'kalle anka'
+			};
+			route.AuthenticateUser(user, function(err, result) {
+				should.exists(err);
+				result.should.be.equal(false);
+				done();
+			});
+		});
+	});
+
+	it('authenticate user with non existing nickname', function(done) {
+		var user = {
+			nickname: 'o_O',
+			hash: 'kalle anka'
+		};
+		route.AuthenticateUser(user, function(err, result) {
+			should.exists(err);
+			result.should.be.equal(false);
+			done();
+		});
+	});
+
 });
 
 describe('Get route', function() {
