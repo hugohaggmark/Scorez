@@ -31,12 +31,12 @@ Setup Windows Environment
 Start Scorez (Dev mode)
 -------------------------
 In the Scorez repo directory - `C:\Git\Scorez` run the following: `nodemon server.js`
-This will start Scorez in dev mode see https://github.com/hugohaggmark/Scorez/blob/master/config/index.js for more info
+This will start Scorez in dev mode see https://raw.githubusercontent.com/hugohaggmark/Scorez/master/config.js for more info
 
 Start Scorez (Prod mode)
 --------------------------
 In the Scorez repo directory - `C:\Git\Scorez` run the following: `npm start`
-This will start Scorez in prod mode see https://github.com/hugohaggmark/Scorez/blob/master/config/index.js for more info
+This will start Scorez in prod mode see https://raw.githubusercontent.com/hugohaggmark/Scorez/master/config.js for more info
 
 Run Tests
 ---------
